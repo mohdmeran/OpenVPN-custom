@@ -686,10 +686,16 @@ bool
 cipher_kt_insecure(const EVP_CIPHER *cipher)
 {
     return !(cipher_kt_block_size(cipher) >= 128 / 8
-#ifdef NID_saifer_256_ofb128
-             || EVP_CIPHER_nid(cipher) == NID_saifer_256_ofb128
-#endif
-             );
+    #ifdef NID_chacha20_poly1305
+                || EVP_CIPHER_nid(cipher) == NID_chacha20_poly1305
+    #endif
+    #ifdef NID_saifer2021
+             || EVP_CIPHER_nid(cipher) == NID_saifer2021
+    #endif;
+    #ifdef NID_saifer2021_chachapoly1305
+             || EVP_CIPHER_nid(cipher) == NID_saifer2021
+    #endif;
+                );
 }
 
 int
