@@ -691,10 +691,10 @@ cipher_kt_insecure(const EVP_CIPHER *cipher)
     #endif
     #ifdef NID_saifer2021
              || EVP_CIPHER_nid(cipher) == NID_saifer2021
-    #endif;
+    #endif
     #ifdef NID_saifer2021_chachapoly1305
-             || EVP_CIPHER_nid(cipher) == NID_saifer2021
-    #endif;
+             || EVP_CIPHER_nid(cipher) == NID_saifer2021_chachapoly1305
+    #endif
                 );
 }
 
@@ -732,8 +732,14 @@ cipher_kt_mode_aead(const cipher_kt_t *cipher)
             case NID_aes_128_gcm:
             case NID_aes_192_gcm:
             case NID_aes_256_gcm:
-#ifdef NID_saifer_256_ofb128
-            case NID_saifer_256_ofb128:
+#ifdef NID_chacha20_poly1305
+            case NID_chacha20_poly1305:
+#endif
+#ifdef NID_saifer2021
+            case NID_saifer2021:
+#endif
+#ifdef NID_saifer2021_chachapoly1305
+            case NID_saifer2021_chachapoly1305:
 #endif
                 return true;
         }
