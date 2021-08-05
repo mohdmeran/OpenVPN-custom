@@ -685,6 +685,7 @@ cipher_kt_tag_size(const EVP_CIPHER *cipher_kt)
 bool
 cipher_kt_insecure(const EVP_CIPHER *cipher)
 {
+    
     return !(cipher_kt_block_size(cipher) >= 128 / 8
     #ifdef NID_chacha20_poly1305
                 || EVP_CIPHER_nid(cipher) == NID_chacha20_poly1305
@@ -694,6 +695,12 @@ cipher_kt_insecure(const EVP_CIPHER *cipher)
     #endif
     #ifdef NID_saifer2021_chachapoly1305
              || EVP_CIPHER_nid(cipher) == NID_saifer2021_chachapoly1305
+    #endif
+    #ifdef NID_chacha20
+             || EVP_CIPHER_nid(cipher) == NID_chacha20
+    #endif
+    #ifdef NID_aes_256_ctr
+             || EVP_CIPHER_nid(cipher) == NID_aes_256_ctr
     #endif
                 );
 }
@@ -740,6 +747,12 @@ cipher_kt_mode_aead(const cipher_kt_t *cipher)
 #endif
 #ifdef NID_saifer2021_chachapoly1305
             case NID_saifer2021_chachapoly1305:
+#endif
+#ifdef NID_chacha20
+            case NID_chacha20:
+#endif
+#ifdef NID_aes_256_ctr
+            case NID_aes_256_ctr:
 #endif
                 return true;
         }
